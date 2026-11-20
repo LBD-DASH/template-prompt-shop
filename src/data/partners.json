@@ -1,0 +1,5 @@
+{
+  "_note": "Candidate platforms only. Not linked anywhere yet. Paste a tracked link into affiliateUrl only after a program approves us. Never invent tracking IDs.",
+  "notion": { "name": "Notion", "kind": "template-platform", "blurb": "Workspace tool that Notion templates would be built for.", "url": "https://www.notion.com/", "affiliateUrl": "" },
+  "gumroad": { "name": "Gumroad", "kind": "store-platform", "blurb": "One possible store platform, undecided.", "url": "https://gumroad.com/", "affiliateUrl": "" }
+}
