@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { withBase, absUrl } from '../../lib/url';
+export async function getStaticPaths() {
+  const all = await getCollection('collections');
+  return all.map((e) => ({ params: { slug: e.id }, props: { entry: e } }));
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: absUrl('', Astro.site) },
+    { '@type': 'ListItem', position: 2, name: d.name, item: absUrl(`collections/${entry.id}/`, Astro.site) } ] },
+];
+---
+<Base title={d.title} description={d.description} path={`collections/${entry.id}/`} jsonLd={ld}>
+  <PageHead title={d.name} eyebrow="Planned offering" />
+  <div class="wrap read section">
+    <p class="callout"><strong>Not on sale.</strong> This pack is planned. No price, no checkout. Last checked 20 Nov 2026.</p>
+    <p class="lede">{d.summary}</p>
+    <h2>Who it is for</h2><p>{d.audience}</p>
+    <h2>What a pack would contain</h2>
+    <ul>{d.contents.map((c) => <li>{c}</li>)}</ul>
+    <div class="prose"><Content /></div>
+    <p><a class="btn btn-amber" href={withBase('enquire/')}>Request a quote</a></p>
+    <h2>Questions</h2>
+    {d.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div>
+</Base>

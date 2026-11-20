@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { faq, faqLd } from '../lib/faq';
+---
+<Base title="FAQ" description="Answers about Template and Prompt Shop: nothing is for sale yet, no prices, no reviews, and how enquiries will work." path="faq/" jsonLd={[faqLd()]}>
+  <PageHead title="Frequently asked questions" />
+  <div class="wrap read section">{faq.map((f) => <details open><summary><strong>{f.q}</strong></summary><p>{f.a}</p></details>)}</div>
+</Base>

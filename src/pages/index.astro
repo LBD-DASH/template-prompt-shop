@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/url';
+const cols = (await getCollection('collections')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Templates and Prompt Packs, Planned" description="A showcase of planned Notion templates, spreadsheets, SOP packs and prompt libraries. Nothing is for sale yet. Request a quote or enquire." path="">
+  <section class="hero"><div class="wrap" style="padding:4rem 0">
+    <span class="eyebrow">Showcase only</span>
+    <h1>Templates and prompt packs, planned and honest</h1>
+    <p class="lede" style="color:#c3cede">We are designing Notion templates, spreadsheets, SOP packs and prompt libraries. None are on sale yet. Browse what each would contain, then request a quote or enquire.</p>
+    <p><a class="btn btn-amber" href={withBase('enquire/')}>Request a quote</a></p>
+  </div></section>
+  <section class="section" id="collections"><div class="wrap">
+    <div class="section-head"><h2>Planned collections</h2><p class="muted">Each is a planned offering, not a product that exists or has been sold.</p></div>
+    <div class="cats">
+      {cols.map((c) => (
+        <a class="cat" href={withBase(`collections/${c.id}/`)}><div class="cat-body"><span class="cat-tag">Planned</span><h3>{c.data.name}</h3><p>{c.data.summary}</p><span>See what it would contain</span></div></a>
+      ))}
+    </div>
+  </div></section>
+  <section class="section section-alt"><div class="wrap read">
+    <h2>Our promises</h2>
+    <p>No invented reviews, sales numbers or results. No prices until they are decided. No checkout. See the <a href={withBase('disclosure/')}>disclosure</a>.</p>
+  </div></section>
+</Base>
