@@ -1,0 +1,53 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+import '../styles/global.css';
+import { withBase, absUrl, SITE_NAME } from '../lib/url';
+interface Props { title: string; description: string; path: string; jsonLd?: object[]; }
+const { title, description, path, jsonLd = [] } = Astro.props;
+const canonical = absUrl(path, Astro.site);
+const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1a2e" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="sitemap" href={withBase('sitemap.xml')} />
+    {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header"><div class="wrap">
+      <a class="brand" href={withBase('')}><span>{SITE_NAME}</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href={withBase('#collections')}>Collections</a>
+        <a href={withBase('faq/')}>FAQ</a>
+        <a href={withBase('about/')}>About</a>
+        <a class="nav-cta" href={withBase('enquire/')}>Enquire</a>
+      </nav>
+    </div></header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer"><div class="wrap">
+      <p>{SITE_NAME} is a showcase of planned digital templates and prompt packs. Nothing is for sale yet and there is no checkout. Last checked 20 Nov 2026.</p>
+      <ul class="foot-links">
+        <li><a href={withBase('disclosure/')}>Disclosure</a></li>
+        <li><a href={withBase('privacy/')}>Privacy</a></li>
+        <li><a href={withBase('about/')}>About</a></li>
+        <li><a href={withBase('faq/')}>FAQ</a></li>
+        <li><a href={withBase('sitemap.xml')}>Sitemap</a></li>
+      </ul>
+      <p class="foot-base">© {new Date().getFullYear()} {SITE_NAME}.</p>
+    </div></footer>
+  </body>
+</html>
