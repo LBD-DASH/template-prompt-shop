@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { withBase } from '../lib/url';
+---
+<Base title="About" description="About Template and Prompt Shop: a small showcase of planned digital templates and prompt packs, built honestly with nothing for sale yet." path="about/">
+  <PageHead title="About" />
+  <div class="wrap read section prose">
+<p>Template and Prompt Shop is a v1 showcase of digital products we plan to make: Notion templates, spreadsheet templates, SOP packs and curated prompt libraries.</p><p>It is early. There are no products on sale, no customers and no reviews. Each collection page describes what a pack would aim to contain, labelled as planned.</p><p>Questions? See the <a href={withBase("faq/")}>FAQ</a> or the <a href={withBase("enquire/")}>enquiry page</a>.</p>
+  </div>
+</Base>
